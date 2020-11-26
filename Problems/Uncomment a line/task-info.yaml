@@ -1,0 +1,15 @@
+type: code
+files:
+- name: main.js
+  visible: true
+  text: "console.log(\"one\");\n// console.log(\"One\");\n/* console.log(\"two\");\n\
+    console.log(\"two.\");\nconsole.log(\"three\"); \n//console.log(\"four\");\nconsole.log(\"\
+    four.\");*/\nconsole.log(\"Four\");"
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/8175#comment
+status: Solved
+feedback:
+  message: <html>Correct solution<br/><br/>Continue on <a href="https://hyperskill.org/learn/step/8175#comment">JetBrains
+    Academy</a></html>
+  time: Thu, 26 Nov 2020 15:22:16 UTC
+record: -1

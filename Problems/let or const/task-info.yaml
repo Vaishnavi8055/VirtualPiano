@@ -1,0 +1,16 @@
+type: code
+files:
+- name: main.js
+  visible: true
+  text: |-
+    // сhange the code below
+    const status = "online";
+    status = "offline";
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/8193#comment
+status: Solved
+feedback:
+  message: <html>Correct solution<br/><br/>Continue on <a href="https://hyperskill.org/learn/step/8193#comment">JetBrains
+    Academy</a></html>
+  time: Thu, 26 Nov 2020 15:29:55 UTC
+record: -1

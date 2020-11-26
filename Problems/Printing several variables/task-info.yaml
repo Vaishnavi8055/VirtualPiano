@@ -1,0 +1,19 @@
+type: code
+files:
+- name: main.js
+  visible: true
+  text: |-
+    const name = "Jessica";
+    let age = 26;
+
+    // сhange the code below
+    console.log();
+    console.log();
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/8192#comment
+status: Solved
+feedback:
+  message: <html>Correct solution<br/><br/>Continue on <a href="https://hyperskill.org/learn/step/8192#comment">JetBrains
+    Academy</a></html>
+  time: Thu, 26 Nov 2020 15:31:48 UTC
+record: -1

@@ -1,0 +1,17 @@
+type: code
+files:
+- name: main.js
+  visible: true
+  text: |-
+    console.log("I like");
+    console.log("Oranges");
+    console.log("Apples");
+    console.log("Pears");
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/8176#comment
+status: Solved
+feedback:
+  message: <html>Correct solution<br/><br/>Continue on <a href="https://hyperskill.org/learn/step/8176#comment">JetBrains
+    Academy</a></html>
+  time: Thu, 26 Nov 2020 15:24:19 UTC
+record: -1

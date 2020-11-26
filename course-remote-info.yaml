@@ -1,0 +1,124 @@
+hyperskill_project:
+  id: 101
+  ide_files: https://stepik.org/media/attachments/lesson/315625/additional_files.json
+  is_template_based: false
+  use_ide: true
+update_date: Thu, 26 Nov 2020 13:39:27 UTC
+stages:
+- id: 556
+  step: 9022
+  is_completed: true
+- id: 557
+  step: 9023
+  is_completed: true
+- id: 558
+  step: 9024
+  is_completed: false
+- id: 559
+  step: 9025
+  is_completed: false
+- id: 560
+  step: 9026
+  is_completed: false
+topics:
+  0:
+  - title: World Wide Web
+    theory_id: 6633
+  - title: HyperText Transfer Protocol
+    theory_id: 6569
+  - title: HTTP URL
+    theory_id: 6740
+  - title: IDE
+    theory_id: 10996
+  - title: HTML basics
+    theory_id: 6434
+  - title: Tags and attributes
+    theory_id: 7536
+  - title: HTML page structure
+    theory_id: 6491
+  - title: WebStorm
+    theory_id: 9492
+  1:
+  - title: Block-level elements
+    theory_id: 7271
+  - title: Inline Elements
+    theory_id: 7518
+  - title: HTML attributes id and class
+    theory_id: 7527
+  - title: Comments
+    theory_id: 7502
+  - title: What is CSS
+    theory_id: 7678
+  - title: Connecting CSS to HTML
+    theory_id: 7418
+  - title: Basic syntax
+    theory_id: 7722
+  - title: Comments
+    theory_id: 7730
+  - title: Colors
+    theory_id: 7973
+  - title: Border
+    theory_id: 8355
+  - title: Absolute units
+    theory_id: 10605
+  - title: Relative units
+    theory_id: 10671
+  - title: Width and height
+    theory_id: 8325
+  - title: Margin and padding
+    theory_id: 8346
+  2:
+  - title: Introduction to JavaScript
+    theory_id: 8016
+  - title: Overview of the basic program
+    theory_id: 8154
+  - title: Multi-line programs
+    theory_id: 8162
+  - title: Comments
+    theory_id: 8170
+  - title: Variables
+    theory_id: 8186
+  - title: Strings and numbers
+    theory_id: 8194
+  - title: Arithmetic operators
+    theory_id: 8372
+  - title: Boolean and logical operators
+    theory_id: 8471
+  - title: Introduction to Objects
+    theory_id: 8588
+  - title: Functions
+    theory_id: 8388
+  - title: Null and Undefined
+    theory_id: 8564
+  - title: Type conversion
+    theory_id: 8380
+  - title: Comparison operators
+    theory_id: 8580
+  - title: Conditional operators
+    theory_id: 8889
+  - title: DOM
+    theory_id: 8635
+  - title: DOM events
+    theory_id: 10857
+  - title: Connecting JS to HTML
+    theory_id: 7510
+  - title: CSS Selectors
+    theory_id: 7738
+  - title: DOM methods
+    theory_id: 8662
+  - title: The "addEventListener" method
+    theory_id: 8723
+  - title: Keyboard events handling
+    theory_id: 8898
+  3:
+  - title: Naming variables
+    theory_id: 8364
+  - title: Audio
+    theory_id: 7493
+  - title: Audio Object
+    theory_id: 8906
+  4:
+  - title: Google Fonts
+    theory_id: 7844
+  - title: Positioning Properties
+    theory_id: 8204

@@ -1,0 +1,13 @@
+type: code
+custom_name: I like JavaScript!
+files:
+- name: main.js
+  visible: true
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/8020#comment
+status: Solved
+feedback:
+  message: <html>Correct solution<br/><br/>Continue on <a href="https://hyperskill.org/learn/step/8020#comment">JetBrains
+    Academy</a></html>
+  time: Thu, 26 Nov 2020 14:29:29 UTC
+record: -1
