@@ -44,21 +44,38 @@
 <body>
 <!-- tags to indicate keyboard keys-->
 <div class="container">
-    <kbd id="key-1">A</kbd>
-    <kbd id="key-2">S</kbd>
-    <kbd id="key-3">D</kbd>
-    <kbd id="key-4">F</kbd>
-    <kbd id="key-5">G</kbd>
-    <kbd id="key-6">H</kbd>
-    <kbd id="key-7">J</kbd>
+    <kbd>A</kbd>
+    <kbd>S</kbd>
+    <kbd>D</kbd>
+    <kbd>F</kbd>
+    <kbd>G</kbd>
+    <kbd>H</kbd>
+    <kbd>J</kbd>
+</div>
 
     <script>
 
         // Event Handlers
+        document.addEventListener("keydown", function (e) {
 
-
-
+            if (e.key === "A") {
+                console.log("The 'A' key is pressed.")
+            } else if (e.key === "S") {
+                console.log("The 'S' key is pressed.")
+            } else if (e.key === "D") {
+                console.log("The 'D' key is pressed.")
+            } else if (e.key === "F") {
+                console.log("The 'F' key is pressed.")
+            } else if (e.key === "G") {
+                console.log("The 'G' key is pressed.")
+            } else if (e.key === "H") {
+                console.log("The 'H' key is pressed.")
+            } else if (e.key === "J") {
+                console.log("The 'J' key is pressed.")
+            } else {
+                console.log("The '"+ e.key +"' key is pressed.")
+            }
+        });
     </script>
-</div>
 </body>
 </html>
