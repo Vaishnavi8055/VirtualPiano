@@ -1,0 +1,30 @@
+type: code
+files:
+- name: main.js
+  visible: true
+  text: |-
+    let age = 6;
+
+    if (age < 6) {
+        console.log("Anna is a little child");
+    }
+    else if (age >= 6 && age < 18) {
+        console.log("Anna goes to school");
+    }
+    else if (age == 18) {
+        console.log("Anna is going to study at University");
+    }
+    else if (age > 18 && age < 22) {
+        console.log("Anna studies at University");
+    }
+    else {
+        console.log("Anna works");
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/8895#comment
+status: Solved
+feedback:
+  message: <html>Correct solution<br/><br/>Continue on <a href="https://hyperskill.org/learn/step/8895#comment">JetBrains
+    Academy</a></html>
+  time: Fri, 27 Nov 2020 04:46:29 UTC
+record: -1
