@@ -345,6 +345,52 @@ files:
         }
     );
   learner_created: false
+- name: src/KeyAudio/A.mp3
+  visible: true
+  learner_created: true
+- name: src/KeyAudio/D.mp3
+  visible: true
+  learner_created: true
+- name: src/KeyAudio/F.mp3
+  visible: true
+  learner_created: true
+- name: src/KeyAudio/G.mp3
+  visible: true
+  learner_created: true
+- name: src/KeyAudio/H.mp3
+  visible: true
+  learner_created: true
+- name: src/KeyAudio/J.mp3
+  visible: true
+  learner_created: true
+- name: src/KeyAudio/S.mp3
+  visible: true
+  learner_created: true
+- name: src/white_keys/A.mp3
+  visible: true
+  learner_created: true
+- name: src/white_keys/D.mp3
+  visible: true
+  learner_created: true
+- name: src/white_keys/F.mp3
+  visible: true
+  learner_created: true
+- name: src/white_keys/G.mp3
+  visible: true
+  learner_created: true
+- name: src/white_keys/H.mp3
+  visible: true
+  learner_created: true
+- name: src/white_keys/J.mp3
+  visible: true
+  learner_created: true
+- name: src/white_keys/S.mp3
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/101/stages/559/implement#comment
-status: Unchecked
-record: -1
+status: Solved
+feedback:
+  message: Congratulations! Continue on <a href="https://hyperskill.org/projects/101/stages/559/implement">JetBrains
+    Academy</a>
+  time: Sat, 28 Nov 2020 18:50:42 UTC
+record: 4

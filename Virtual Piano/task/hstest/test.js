@@ -24,46 +24,43 @@ async function stageTest() {
     await sleep(1000);
 
     await page.evaluate(() => {
-        this.realLog = console.log;
-        this.userPrinted = [];
-        console.log = x => {
-            this.userPrinted.push(x);
-            this.realLog(x);
+        this.RealAudio = this.Audio;
+        this.audioCreated = [];
+        this.Audio = function(...args) {
+            audioCreated.push(args[0]);
+            return new RealAudio(...args);
+        };
+
+        this.oldCreate = document.createElement;
+        document.createElement = function(...args) {
+            if (args[0].toLowerCase() === 'audio') {
+                audioCreated.push(args[0]);
+            }
+            return oldCreate(...args);
         }
     });
 
     let result = await hs.testPage(page,
-        // Test #1 - check all keys are pressed
-        // TODO FIXED 09.10.2020
+        // Test #1 - audio object creation check
         () => {
-            let keys = ['a', 's', 'd', 'f', 'g', 'h', 'j'];
-
-            for (let key of keys) {
-                this.realLog("Before: " + JSON.stringify(this.userPrinted));
+            let keys = ['a', 's', 'd', 'f', 'g', 'h', 'j', 'w', 'e', 't', 'y', 'u' ];
+            keys.forEach(function (key) {
                 hs.press(key);
-                this.realLog("After: " + JSON.stringify(this.userPrinted));
+            });
 
-                if (this.userPrinted.length !== 1) {
-                    return hs.wrong(
-                        `When the user presses a key, you should log a single message, ` +
-                        `found ${this.userPrinted.length} messages`
-                    )
-                }
+            let audioElements = this.audioCreated.length;
 
-                let elem = this.userPrinted.pop();
-                if (!elem.toString().toLowerCase().includes(`'${key}'`)) {
-                    return hs.wrong(
-                        `When the user pressed a key "${key}", ` +
-                        `The output message must include '${key}'\n` +
-                        `You printed:\n`+
-                        `"${elem}"`
-                    );
-                }
+            if (audioElements === 0) {
+                return hs.wrong(`Сannot find the audio objects. Note that audio objects must be created exactly when keys are pressed.`);
+            } else if (audioElements < keys.length) {
+                return hs.wrong(`There are not enough audio objects, ${audioElements} of 12 objects were found`);
+            } else if (audioElements > keys.length) {
+                return hs.wrong(`There are too many audio objects, found ${audioElements} instead of 12 objects`);
             }
-
-            return hs.correct()
+            return hs.correct();
         },
-        // Test #2 - check div element with class container + 7 elements inside
+
+        // Test #2 - check div element with class 'container' + 2 elements inside
         () => {
             let containerElements = document.getElementsByClassName('container');
             if (containerElements.length === 0) {
@@ -87,25 +84,11 @@ async function stageTest() {
 
             let len = this.innerDivElements.length;
 
-            return len === 7 ?
+            return len === 2 ?
                 hs.correct() :
-                hs.wrong(`Div with class 'container' should contain 7 elements, found: ${len}`)
+                hs.wrong(`Div with class 'container' should contain 2 elements, found: ${len}`)
         },
-
-        // Test #3 - check if all 7 elements are <kbd> elements
-        () => {
-            let i = 0;
-            for (let elem of this.innerDivElements) {
-                i++;
-                elem = elem.nodeName.toLowerCase();
-                if (elem !== 'kbd') {
-                    return hs.wrong(`Element #${i} is not <kbd> element, it's <${elem}>`);
-                }
-            }
-            return hs.correct();
-        },
-
-        // Test #4 - check if all keys are presented
+        // Test #3 - check if all keys are presented
         () => {
             let expectedKeySet = new Set();
 
@@ -116,6 +99,11 @@ async function stageTest() {
             expectedKeySet.add('G');
             expectedKeySet.add('H');
             expectedKeySet.add('J');
+            expectedKeySet.add('W');
+            expectedKeySet.add('E');
+            expectedKeySet.add('T');
+            expectedKeySet.add('Y');
+            expectedKeySet.add('U');
 
             let actualKeySet = new Set();
 
@@ -129,29 +117,110 @@ async function stageTest() {
                 && [...actualKeySet].every(value => expectedKeySet.has(value));
 
             if (!setsEquals) {
-                return hs.wrong(`The names of your keys are incorrect. It must be: A, S, D, F, G, H, J`);
+                return hs.wrong(`The names of your keys are incorrect. It must be: A, S, D, F, G, H, J, W, E, T, Y, U`);
             }
 
             return hs.correct();
         },
 
-        // Test #5 - check if all 7 elements contain a single letter
+        // Test #4 - check if all 2 elements are <div> elements
+        () => {
+            let i = 0;
+            for (let elem of this.innerDivElements) {
+                i++;
+                elem = elem.nodeName.toLowerCase();
+                if (elem !== 'div') {
+                    return hs.wrong(`Element inside container #${i} is not <div> element, it's <${elem}>`);
+                }
+            }
+            return hs.correct();
+        },
+
+        // Test #5 - check div element with class 'white-keys' + 7 elements inside
+        () => {
+            let whiteKeysElement = document.getElementsByClassName('white-keys');
+            if (whiteKeysElement.length === 0) {
+                return hs.wrong(`Cannot find element with class 'white-keys'`);
+            } else if (whiteKeysElement.length > 1) {
+                return hs.wrong(`Found ${whiteKeysElement.length} elements with class 'white-keys'` +
+                    `, the page should contain just a single such element.`);
+            }
+
+            let whiteKeys = whiteKeysElement[0];
+            this.div = whiteKeys;
+
+            let contName = whiteKeys.nodeName.toLowerCase();
+            if (contName !== 'div') {
+                return hs.wrong(`Cannot find 'div' element with class 'white-keys'.`);
+            }
+
+            let containerNodes = Array.from(whiteKeys.childNodes);
+            this.innerDivElements = containerNodes.filter(
+                e => e.nodeType === Node.ELEMENT_NODE);
+
+            let len = this.innerDivElements.length;
+
+            return len === 7 ?
+                hs.correct() :
+                hs.wrong(`Div with class 'white-keys' should contain 7 elements, found: ${len}`)
+        },
+
+        // Test #6 - check if all 7 elements are <kbd> elements
+        () => {
+            let i = 0;
+            for (let elem of this.innerDivElements) {
+                i++;
+                elem = elem.nodeName.toLowerCase();
+                if (elem !== 'kbd') {
+                    return hs.wrong(`Element #${i} inside div with class 'white-keys' is not <kbd> element, it's <${elem}>`);
+                }
+            }
+            return hs.correct();
+        },
+
+        // Test #7 - check if all 7 elements contain a single letter
         () => {
             let i = 0;
             for (let elem of this.innerDivElements) {
                 i++;
                 elem = elem.innerHTML;
                 if (elem.length === 0) {
-                    return hs.wrong(`Element #${i} is empty, but should contain a single letter.`);
+                    return hs.wrong(`Element #${i} inside div with class 'white-keys' is empty, but should contain a single letter.`);
                 } else if (elem.length > 1) {
-                    return hs.wrong(`Element #${i} contains ${elem.length} symbols, ` +
+                    return hs.wrong(`Element #${i} inside div with class 'white-keys' contains ${elem.length} symbols, ` +
                         `but should contain a single letter. The text inside element is:\n"${elem}"`);
                 }
             }
             return hs.correct();
         },
 
-        // Test 6 - Test if all 7 elements have the same top y-coordinate
+        // Test #8 - Test that only one instance of each button
+        () => {
+            let buttons = document.querySelectorAll('kbd');
+
+            let counts = {};
+
+            for (let button of buttons) {
+                let buttonText = button.textContent || button.innerText;
+                if (!(buttonText in counts)) {
+                    counts[buttonText] = 1;
+                } else {
+                    counts[buttonText] = counts[buttonText] + 1;
+                }
+            }
+
+            console.log(counts);
+
+            for (const [key, value] of Object.entries(counts)) {
+                if (value > 1) {
+                    return hs.wrong(`Too many buttons with the ${key} text`);
+                }
+            }
+
+            return hs.correct();
+        },
+
+        // Test #9 - Test if all elements have the same top y-coordinate
         // (located on a single horizontal line)
         () => {
             let referenceTop = this.innerDivElements[0].getBoundingClientRect().top;
@@ -168,13 +237,13 @@ async function stageTest() {
             return hs.correct();
         },
 
-        // Test 7 - Test if all 7 elements are located in the middle
+        // Test #10 - Test if all elements are located in the middle
         () => {
             let width = window.innerWidth;
             let height = window.innerHeight;
 
             let mostLeftPx = this.innerDivElements[0].getBoundingClientRect().left;
-            let mostRightPx = this.innerDivElements[6].getBoundingClientRect().right;
+            let mostRightPx = this.innerDivElements[2].getBoundingClientRect().right;
 
             let freeSpaceOnLeft = mostLeftPx;
             let freeSpaceOnRight = width - mostRightPx;
@@ -203,7 +272,7 @@ async function stageTest() {
             return hs.correct();
         },
 
-        // Test 8 - Test if all elements have border
+        // Test #11 - Test if all elements have border
         () => {
             let i = 0;
             for (let elem of this.innerDivElements) {
@@ -217,14 +286,14 @@ async function stageTest() {
             return hs.correct()
         },
 
-        // Test 9 - Test if all element's background color is white and
+        // Test #12 - Test if 7 element's background color is white and
         // body's background in not white
         () => {
-            function getRealColor(elem) {
+            this.getRealColor = function (elem) {
                 while (elem) {
                     let color = window.getComputedStyle(elem).backgroundColor;
                     if (color !== "rgba(0, 0, 0, 0)") {
-                        let match = color.match(/^rgba?\((\d+), (\d+), (\d+)(, \d+)?\)$/i);
+                        let match = color.match(/^rgba?\((\d+), (\d+), (\d+)(, [\d.]+)?\)$/i);
                         return {
                             red: Number(match[1]),
                             green: Number(match[2]),
@@ -235,10 +304,9 @@ async function stageTest() {
                     elem = elem.parentElement;
                 }
                 return null;
-            }
+            };
 
-            console.log(document.body)
-            let bodyBack = getRealColor(document.body);
+            let bodyBack = this.getRealColor(document.body);
             if (bodyBack === null) {
                 return hs.wrong("Looks like body's background color is not set. " +
                     "It should be some non-white color.")
@@ -261,7 +329,7 @@ async function stageTest() {
             return hs.correct()
         },
 
-        // Test 10 - Test width, height
+        // Test #13 - Test width, height
         () => {
             let i = 0;
             for (let elem of this.innerDivElements) {
@@ -282,8 +350,7 @@ async function stageTest() {
             }
             return hs.correct()
         },
-
-        // Test 11 - Checking key distances between keys
+        // Test 14 - Checking key distances between keys
         () => {
             let buttons = document.querySelectorAll('kbd');
 
@@ -309,6 +376,117 @@ async function stageTest() {
             if (distanceAS > 5) {
                 console.log(distanceAS);
                 return hs.wrong(`Make sure there's no extra distance between your white keys. Also, check that the white keys do not overlap.`);
+            }
+
+            return hs.correct()
+        },
+
+        // Test #15 - check div element with class 'black-keys' + 5 elements inside
+        () => {
+            let blackKeysElement = document.getElementsByClassName('black-keys');
+            if (blackKeysElement.length === 0) {
+                return hs.wrong(`Cannot find element with class 'black-keys'`);
+            } else if (blackKeysElement.length > 1) {
+                return hs.wrong(`Found ${blackKeysElement.length} elements with class 'black-keys'` +
+                    `, the page should contain just a single such element.`);
+            }
+
+            let blackKeys = blackKeysElement[0];
+            this.div = blackKeys;
+
+            let contName = blackKeys.nodeName.toLowerCase();
+            if (contName !== 'div') {
+                return hs.wrong(`Cannot find 'div' element with class 'black-keys'.`);
+            }
+
+            let containerNodes = Array.from(blackKeys.childNodes);
+            this.innerDivElements = containerNodes.filter(
+                e => e.nodeType === Node.ELEMENT_NODE);
+
+
+            let len = this.innerDivElements.length;
+
+            return len === 5 ?
+                hs.correct() :
+                hs.wrong(`Div with class 'black-keys' should contain 5 elements, found: ${len}`)
+        },
+
+        // Test #16 - check if all 5 elements are <kbd> elements
+        () => {
+            let i = 0;
+            for (let elem of this.innerDivElements) {
+                i++;
+                elem = elem.nodeName.toLowerCase();
+                if (elem !== 'kbd') {
+                    return hs.wrong(`Element #${i} is not <kbd> element, it's <${elem}>`);
+                }
+            }
+            return hs.correct();
+        },
+
+        // Test #17 - check if all 5 elements contain a single letter
+        () => {
+            let i = 0;
+            for (let elem of this.innerDivElements) {
+                i++;
+                elem = elem.innerHTML;
+                if (elem.length === 0) {
+                    return hs.wrong(`Element #${i} is empty, but should contain a single letter.`);
+                } else if (elem.length > 1) {
+                    return hs.wrong(`Element #${i} contains ${elem.length} symbols, ` +
+                        `but should contain a single letter. The text inside element is:\n"${elem}"`);
+                }
+            }
+            return hs.correct();
+        },
+
+        // Test #18 - Test if the background color of 5 elements is black
+        () => {
+            let i = 0;
+            for (let elem of this.innerDivElements) {
+                i++;
+                let currColor = this.getRealColor(elem);
+                if (currColor.hex !== 0x000000) {
+                    return hs.wrong(`Looks like piano's element #${i} ` +
+                        `have non-black background color. It should be colored black.`);
+                }
+            }
+            return hs.correct()
+        },
+
+        // Test #19 - Test if there is enough space between E and T keyboards
+        () => {
+            let buttons = document.querySelectorAll('kbd');
+
+            let buttonW = null;
+            let buttonE = null;
+            let buttonT = null;
+
+            for (let button of buttons) {
+                let buttonText = button.textContent || button.innerText;
+                if (buttonText.toLowerCase() === 'w') {
+                    buttonW = button
+                }
+
+                if (buttonText.toLowerCase() === 'e') {
+                    buttonE = button
+                }
+
+                if (buttonText.toLowerCase() === 't') {
+                    buttonT = button
+                }
+            }
+
+            let coordinateW = buttonW.getBoundingClientRect().right;
+            let coordinateE = buttonE.getBoundingClientRect().left;
+            let coordinateT = buttonT.getBoundingClientRect().left;
+
+            let distanceWE = Math.abs(coordinateW - coordinateE);
+            let distanceET = Math.abs(coordinateE - coordinateT);
+
+            if (distanceET < distanceWE + 1) {
+                return hs.wrong(`Are you sure you've positioned the black keys like a real piano?` +
+                    `The distance between the "E" and "T" keys should be greater than it is now.`);
             }
 
             return hs.correct()
